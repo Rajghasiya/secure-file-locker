@@ -7,11 +7,12 @@ The goal of this project is simple: provide reliable file protection while givin
 
 ## Features
 
-- AES-256-CBC encryption for strong security
-- Supports any file type 
-- Cross-platform: MacOS and Linux
-- Simple command-line interface
-- Easy to extend and customize
+- AES-256-CBC encryption
+- Password entered securely (hidden, not on command line)
+- Works with any file type
+- macOS & Linux supported
+- Simple CLI usage
+- Designed to be extended for learning
 
 ---
 
@@ -19,35 +20,55 @@ The goal of this project is simple: provide reliable file protection while givin
 
 ### 1. Install required dependencies
 
-Linux:
+**Linux**
 ```bash
 sudo apt update
 sudo apt install build-essential libssl-dev
+```
 
-macOS:
-brew install openssl
+**macOS**
+```bash
+brew install openssl@3
+```
 
-### 2.Clone the repository
+### 2. Clone the repository
 
-git clone https://github.com/<username>/secure-file-locker.git
+```bash
+git clone https://github.com/Rajghasiya/secure-file-locker.git
 cd secure-file-locker
+```
 
 ### 3. Build the program
 
+**Standard build**
+```bash
 gcc src/main.c -lcrypto -o locker
+```
 
-If OpenSSL path issues occur on macOS, compile like this:
-gcc src/main.c -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib -lcrypto -o locker
+**If macOS reports OpenSSL not found**
+```bash
+gcc src/main.c \
+-I$(brew --prefix openssl@3)/include \
+-L$(brew --prefix openssl@3)/lib \
+-lcrypto -o locker
+```
 
-## usage
+## Usage
 
-Encrypt a file:
-./locker enc input.txt output.enc mypassword
+**Encrypt**
+```bash
+./locker enc file.txt
+```
 
-Decrypt a file:
-./locker dec output.enc decrypted.txt mypassword
+**Decrypt**
+```bash
+./locker dec file.txt
+```
 
-## Notes:
+You will be prompted for the password (it will not be shown while typing).
+
+## Notes
+
 	•	Encryption and decryption require the same password
 	•	Lost passwords cannot be recovered
 	•	Always test with sample files first before encrypting important data
